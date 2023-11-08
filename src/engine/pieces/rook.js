@@ -13,11 +13,8 @@ export default class Rook extends Piece {
         let moves = new Array(0)
         for (let i = 0; i<8; i++) {
             if (i!==currentSquare.col) {moves.push(Square.at(currentSquare.row, i))}
+            if (i!==currentSquare.row) {moves.push(Square.at(i, currentSquare.col))}
         }
-        for (let j = 0; j<8; j++) {
-            if (j!==currentSquare.row) {moves.push(Square.at(j, currentSquare.col))}
-        }
-
         return moves;
     }
 }
