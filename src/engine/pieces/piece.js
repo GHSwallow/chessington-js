@@ -18,6 +18,15 @@ export default class Piece {
         return moves
     }
 
+    removeMoveToSamePosition(moves, currentSquare){
+        moves.forEach((move) => {
+            if (move.row===currentSquare.row && move.col===currentSquare.col){
+                moves.splice(moves.indexOf(move), 1)
+            }
+        })
+        return moves
+    }
+
     getAllLateralMoves(currentSquare) {
         let moves = new Array(0)
         for (let i = 0; i<8; i++) {
