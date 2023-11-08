@@ -19,6 +19,13 @@ export default class Pawn extends Piece {
             moves.push((Square.at(currentSquare.row - 1, currentSquare.col)))
             if (currentSquare.row === 6) {moves.push((Square.at(currentSquare.row - 2, currentSquare.col)))}
         }
+
+        moves.forEach((move) => {
+            if (board.getPiece(move)){
+                moves.splice(moves.indexOf(move), 2)
+            }
+        })
+
         return moves
     }
 }
