@@ -9,6 +9,15 @@ export default class Piece {
         throw new Error('This method must be implemented, and return a list of available moves');
     }
 
+    removeMovesOutsideBoard(moves){
+        moves.forEach((move) => {
+            if (move.row>7 || move.row<0 || move.col>7 || move.col<0){
+                moves.splice(moves.indexOf(move), 1)
+            }
+        })
+        return moves
+    }
+
     getAllLateralMoves(currentSquare) {
         let moves = new Array(0)
         for (let i = 0; i<8; i++) {

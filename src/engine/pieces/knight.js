@@ -20,11 +20,6 @@ export default class Knight extends Piece {
             Square.at(currentSquare.row-1, currentSquare.col+2),
             Square.at(currentSquare.row-1, currentSquare.col-2),
             )
-        moves.forEach((move) => {
-            if (move.row>7 || move.row<0 || move.col>7 || move.col<0){
-                moves.splice(moves.indexOf(move), 1)
-            }
-        })
-        return moves
+        return this.removeMovesOutsideBoard(moves)
     }
 }
