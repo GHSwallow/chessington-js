@@ -10,8 +10,9 @@ export default class Piece {
     }
 
     removeMovesOutsideBoard(moves){
-        moves.forEach((move) => {
-            if (move.row>7 || move.row<0 || move.col>7 || move.col<0){
+        let movesCopy = [...moves];
+        movesCopy.forEach((move) => {
+            if (!this.positionIsOnBoard(move)){
                 moves.splice(moves.indexOf(move), 1)
             }
         })
@@ -19,7 +20,8 @@ export default class Piece {
     }
 
     removeMoveToSamePosition(moves, currentSquare){
-        moves.forEach((move) => {
+        let movesCopy = [...moves];
+        movesCopy.forEach((move) => {
             if (move.row===currentSquare.row && move.col===currentSquare.col){
                 moves.splice(moves.indexOf(move), 1)
             }
