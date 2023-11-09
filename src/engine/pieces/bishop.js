@@ -9,6 +9,12 @@ export default class Bishop extends Piece {
     getAvailableMoves(board) {
         const currentSquare = board.findPiece(this)
         if (!currentSquare){ return new Array(0) }
-        return this.getAllDiagonalMoves(currentSquare)
+
+        let moves = new Array(0)
+        this.propagatePiece(board, currentSquare, moves, 1, 1)
+        this.propagatePiece(board, currentSquare, moves, 1, -1)
+        this.propagatePiece(board, currentSquare, moves, -1, 1)
+        this.propagatePiece(board, currentSquare, moves, -1, -1)
+        return moves
     }
 }
