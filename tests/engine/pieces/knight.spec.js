@@ -64,8 +64,9 @@ describe('Knight', () => {
         const pawn = new Pawn(Player.WHITE);
         board.setPiece(Square.at(2,1), pawn)
         const moves = knight.getAvailableMoves(board);
+        const expectedMoves = [Square.at(1, 2)];
 
-        moves.should.not.deep.have.members([Square.at(2, 1)]);
+        moves.should.deep.have.members(expectedMoves);
     });
 
 
