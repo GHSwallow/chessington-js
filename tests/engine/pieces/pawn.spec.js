@@ -61,6 +61,28 @@ describe('Pawn', () => {
             const moves = pawn.getAvailableMoves(board);
             moves.should.deep.include(Square.at(2, 3));
         });
+
+        it('can take opposing pieces', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Rook(Player.BLACK);
+            board.setPiece(Square.at(1, 3), pawn);
+            board.setPiece(Square.at(2, 4), opposingPiece);
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.deep.include([Square.at(2, 4)]);
+            board.movePiece(Square.at(1, 3), Square.at(2, 4))
+            board.getPiece(Square.at(2, 4)).player.should.equal(Player.WHITE)
+        });
+
+        it('cannot take friendly pieces', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const friendlyPiece = new Rook(Player.WHITE);
+            board.setPiece(Square.at(1, 3), pawn);
+            board.setPiece(Square.at(2, 4), friendlyPiece);
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.not.deep.include(Square.at(2, 4));
+        });
     });
 
     describe('black pawns', () => {
@@ -118,6 +140,28 @@ describe('Pawn', () => {
             const moves = pawn.getAvailableMoves(board);
 
             moves.should.deep.include(Square.at(5, 3));
+        });
+
+        it('can take opposing pieces', () => {
+            const pawn = new Pawn(Player.BLACK);
+            const opposingPiece = new Rook(Player.WHITE);
+            board.setPiece(Square.at(6, 3), pawn);
+            board.setPiece(Square.at(5, 4), opposingPiece);
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.deep.include([Square.at(5, 4)]);
+            board.movePiece(Square.at(6, 3), Square.at(5, 4))
+            board.getPiece(Square.at(5, 4)).player.should.equal(Player.WHITE)
+        });
+
+        it('cannot take friendly pieces', () => {
+            const pawn = new Pawn(Player.BLACK);
+            const friendlyPiece = new Rook(Player.BLACK);
+            board.setPiece(Square.at(6, 3), pawn);
+            board.setPiece(Square.at(5, 4), friendlyPiece);
+
+            const moves = pawn.getAvailableMoves(board);
+            moves.should.not.deep.include(Square.at(5, 4));
         });
     });
 });
