@@ -18,8 +18,9 @@ export default class King extends Piece {
                 moves.push(Square.at(currentSquare.row+i, currentSquare.col+j))
             }
         }
-        moves = this.removeMovesOutsideBoard(moves)
-        moves = this.removeMoveToSamePosition(moves, currentSquare)
+        this.removeMovesOutsideBoard(moves)
+        this.removeMoveToSamePosition(moves, currentSquare)
+        this.removeMovesToFriendlyPieces(board, moves)
         return moves
     }
 }
