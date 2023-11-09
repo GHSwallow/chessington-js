@@ -69,7 +69,12 @@ describe('Pawn', () => {
             board.setPiece(Square.at(2, 4), opposingPiece);
 
             const moves = pawn.getAvailableMoves(board);
-            moves.should.deep.include([Square.at(2, 4)]);
+            const expectedMoves = [
+                Square.at(2,3),
+                Square.at(3,3),
+                Square.at(2,4),
+            ];
+            moves.should.deep.include.members(expectedMoves);
             board.movePiece(Square.at(1, 3), Square.at(2, 4))
             board.getPiece(Square.at(2, 4)).player.should.equal(Player.WHITE)
         });
@@ -149,9 +154,14 @@ describe('Pawn', () => {
             board.setPiece(Square.at(5, 4), opposingPiece);
 
             const moves = pawn.getAvailableMoves(board);
-            moves.should.deep.include([Square.at(5, 4)]);
+            const expectedMoves = [
+                Square.at(5,3),
+                Square.at(4,3),
+                Square.at(5,4),
+            ];
+            moves.should.deep.include.members(expectedMoves);
             board.movePiece(Square.at(6, 3), Square.at(5, 4))
-            board.getPiece(Square.at(5, 4)).player.should.equal(Player.WHITE)
+            board.getPiece(Square.at(5, 4)).player.should.equal(Player.BLACK)
         });
 
         it('cannot take friendly pieces', () => {
