@@ -36,6 +36,18 @@ export default class Piece {
         return moves;
     }
 
+    positionIsOnBoard(square){
+        return (square.row >= 0 && square.row <= 7 && square.col >= 0 && square.col <= 7)
+    }
+
+    propagatePiece(board, currentSquare, moves, rowMove, colMove){
+        let move = Square.at(currentSquare.row+rowMove, currentSquare.col+colMove)
+        while (this.positionIsOnBoard(move) && !board.getPiece(move)){
+            moves.push(move)
+            move = Square.at(move.row+rowMove, move.col+colMove)
+        }
+    }
+
     getAllDiagonalMoves(currentSquare){
         let row = currentSquare.row
         let col = currentSquare.col

@@ -11,6 +11,11 @@ export default class Rook extends Piece {
         if (!currentSquare) {
             return new Array(0)
         }
-        return this.getAllLateralMoves(currentSquare)
+        let moves = new Array(0)
+        this.propagatePiece(board, currentSquare, moves, 0, 1)
+        this.propagatePiece(board, currentSquare, moves, 0, -1)
+        this.propagatePiece(board, currentSquare, moves, 1, 0)
+        this.propagatePiece(board, currentSquare, moves, -1, 0)
+        return moves
     }
 }
