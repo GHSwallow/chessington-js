@@ -52,7 +52,7 @@ export default class Piece {
         let potentialTakeMove = move
         if (
             this.positionIsOnBoard(potentialTakeMove) &&
-            board.getPiece(potentialTakeMove).player !== board.getPiece(currentSquare).player
+            board.getPiece(potentialTakeMove).player !== this.player
     ){
             moves.push(potentialTakeMove)
         }
