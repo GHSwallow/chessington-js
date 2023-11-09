@@ -49,6 +49,13 @@ export default class Piece {
             moves.push(move)
             move = Square.at(move.row+rowMove, move.col+colMove)
         }
+        let potentialTakeMove = move
+        if (
+            this.positionIsOnBoard(potentialTakeMove) &&
+            board.getPiece(potentialTakeMove).player !== board.getPiece(currentSquare).player
+    ){
+            moves.push(potentialTakeMove)
+        }
     }
 
     moveTo(board, newSquare) {
