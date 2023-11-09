@@ -35,6 +35,16 @@ export default class Pawn extends Piece {
                 moves.splice(moves.indexOf(move), 2)
             }
         })
+        let diagonalMoveOne = Square.at(currentSquare.row+rowPropagation, currentSquare.col+1)
+        if (this.positionIsOnBoard(diagonalMoveOne) && board.getPiece(diagonalMoveOne)){
+            moves.push(diagonalMoveOne)
+        }
+        let diagonalMoveTwo = Square.at(currentSquare.row+rowPropagation, currentSquare.col-1)
+        if (this.positionIsOnBoard(diagonalMoveTwo) && board.getPiece(diagonalMoveTwo)){
+            moves.push(diagonalMoveTwo)
+        }
+
+        this.removeMovesToFriendlyPieces(board, moves)
 
 
         return moves

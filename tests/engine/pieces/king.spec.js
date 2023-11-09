@@ -3,6 +3,7 @@ import King from '../../../src/engine/pieces/king';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import Pawn from "../../../src/engine/pieces/pawn";
 
 describe('King', () => {
 
@@ -41,5 +42,30 @@ describe('King', () => {
         const expectedMoves = [Square.at(0, 1), Square.at(1, 1), Square.at(1, 0)];
 
         moves.should.deep.have.members(expectedMoves);
+    });
+
+    it('cannot take friendly pieces', () => {
+        const king = new King(Player.WHITE);
+        board.setPiece(Square.at(0, 0), king);
+        const pawn = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(1, 0), pawn);
+
+        const moves = king.getAvailableMoves(board);
+        const expectedMoves = [Square.at(0, 1), Square.at(1, 1)];
+        moves.should.deep.have.members(expectedMoves);
+    });
+
+    it('can take opposing pieces', () => {
+        const king = new King(Player.WHITE);
+        board.setPiece(Square.at(0, 0), king);
+        const pawn = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(1, 0), pawn);
+
+        const moves = king.getAvailableMoves(board);
+
+        const expectedMoves = [Square.at(0, 1), Square.at(1, 1), Square.at(1, 0)];
+        moves.should.deep.have.members(expectedMoves);
+        board.movePiece(Square.at(0, 0), Square.at(1, 0))
+        board.getPiece(Square.at(1, 0)).player.should.equal(Player.WHITE)
     });
 });
