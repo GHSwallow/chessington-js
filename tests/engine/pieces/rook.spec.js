@@ -4,6 +4,7 @@ import Pawn from '../../../src/engine/pieces/pawn';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
+import player from "../../../src/engine/player";
 
 describe('Rook', () => {
 
@@ -68,6 +69,7 @@ describe('Rook', () => {
         const moves = rook.getAvailableMoves(board);
         moves.should.deep.include(Square.at(4, 6));
         board.movePiece(Square.at(4, 4), Square.at(4, 6))
-        board.getPiece(Square.at(4, 6)).should.equal(Rook)
+        board.getPiece(Square.at(4, 6)).player.should.equal(Player.WHITE)
+
     });
 });
