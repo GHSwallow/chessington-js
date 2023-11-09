@@ -1,4 +1,6 @@
 import Square from "../square";
+import player from "../player";
+import GameSettings from "../gameSettings";
 
 export default class Piece {
     constructor(player) {
@@ -8,21 +10,28 @@ export default class Piece {
     getAvailableMoves(board) {
         throw new Error('This method must be implemented, and return a list of available moves');
     }
+    currentSquareOnBoard(board){
+        return board.findPiece(this);
+    }
 
     removeMovesOutsideBoard(moves){
-        let movesCopy = [...moves];
-        movesCopy.forEach((move) => {
-            if (!this.positionIsOnBoard(move)){
-                moves.splice(moves.indexOf(move), 1)
-            }
+        this._removeOnCondition(moves, (move) => {
+            return !this.positionIsOnBoard(move)
         })
         return moves
     }
 
     removeMoveToSamePosition(moves, currentSquare){
+        this._removeOnCondition(moves, (move) => {
+            return move.row===currentSquare.row && move.col===currentSquare.col
+        })
+        return moves
+    }
+
+    _removeOnCondition(moves, condition)  {
         let movesCopy = [...moves];
         movesCopy.forEach((move) => {
-            if (move.row===currentSquare.row && move.col===currentSquare.col){
+            if (condition(move)){
                 moves.splice(moves.indexOf(move), 1)
             }
         })
@@ -30,10 +39,11 @@ export default class Piece {
     }
 
     positionIsOnBoard(square){
-        return (square.row >= 0 && square.row <= 7 && square.col >= 0 && square.col <= 7)
+        return (square.row >= 0 && square.row < GameSettings.BOARD_SIZE && square.col >= 0 && square.col < GameSettings.BOARD_SIZE)
     }
 
-    propagatePiece(board, currentSquare, moves, rowMove, colMove){
+    updateMovesViaPropagatingPiece(board, moves, rowMove, colMove){
+        const currentSquare = board.findPiece(this)
         let move = Square.at(currentSquare.row+rowMove, currentSquare.col+colMove)
         while (this.positionIsOnBoard(move) && !board.getPiece(move)){
             moves.push(move)

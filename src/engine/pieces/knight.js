@@ -7,9 +7,12 @@ export default class Knight extends Piece {
     }
 
     getAvailableMoves(board) {
+        if (!this.currentSquareOnBoard(board)){
+            return []
+        }
+
+        let moves = []
         const currentSquare = board.findPiece(this)
-        if (!currentSquare){ return new Array(0) }
-        let moves = new Array(0)
         moves.push(
             Square.at(currentSquare.row+2, currentSquare.col+1),
             Square.at(currentSquare.row+2, currentSquare.col-1),

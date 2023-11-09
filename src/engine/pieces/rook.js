@@ -7,15 +7,15 @@ export default class Rook extends Piece {
     }
 
     getAvailableMoves(board) {
-        const currentSquare = board.findPiece(this)
-        if (!currentSquare) {
-            return new Array(0)
+        if (!this.currentSquareOnBoard(board)){
+            return []
         }
-        let moves = new Array(0)
-        this.propagatePiece(board, currentSquare, moves, 0, 1)
-        this.propagatePiece(board, currentSquare, moves, 0, -1)
-        this.propagatePiece(board, currentSquare, moves, 1, 0)
-        this.propagatePiece(board, currentSquare, moves, -1, 0)
+
+        let moves = []
+        this.updateMovesViaPropagatingPiece(board, moves, 0, 1)
+        this.updateMovesViaPropagatingPiece(board, moves, 0, -1)
+        this.updateMovesViaPropagatingPiece(board, moves, 1, 0)
+        this.updateMovesViaPropagatingPiece(board, moves, -1, 0)
         return moves
     }
 }

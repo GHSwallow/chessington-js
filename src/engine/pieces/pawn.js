@@ -8,18 +8,27 @@ export default class Pawn extends Piece {
     }
 
     getAvailableMoves(board) {
-        const currentSquare = board.findPiece(this)
-        if (!currentSquare){ return new Array(0) }
-
-        let moves = new Array(0)
-        if (this.player === Player.WHITE){
-            moves.push((Square.at(currentSquare.row + 1, currentSquare.col)))
-            if (currentSquare.row === 1) {moves.push((Square.at(currentSquare.row + 2, currentSquare.col)))}
-        } else if (this.player === Player.BLACK){
-            moves.push((Square.at(currentSquare.row - 1, currentSquare.col)))
-            if (currentSquare.row === 6) {moves.push((Square.at(currentSquare.row - 2, currentSquare.col)))}
+        if (!this.currentSquareOnBoard(board)){
+            return []
         }
-        
+
+        let moves = []
+        let startingRow = 0
+        let rowPropagation = 0
+        const currentSquare = board.findPiece(this)
+        if (this.player === Player.WHITE) {
+            startingRow = 1
+            rowPropagation = 1
+        } else {
+            startingRow = 6
+            rowPropagation = -1
+        }
+
+        moves.push(Square.at(currentSquare.row + rowPropagation, currentSquare.col))
+        if (currentSquare.row === startingRow) {
+                moves.push((Square.at(currentSquare.row + (2*rowPropagation), currentSquare.col)))
+            }
+
         moves = this.removeMovesOutsideBoard(moves)
         moves.forEach((move) => {
             if (board.getPiece(move)){
