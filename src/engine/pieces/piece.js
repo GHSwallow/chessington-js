@@ -28,6 +28,12 @@ export default class Piece {
         return moves
     }
 
+    removeMovesToFriendlyPieces(board, moves, currentSquare){
+        this._removeOnCondition(moves, (move) => {
+            this.positionIsOnBoard(move) && board.getPiece(move) && board.getPiece(move).player === this.player
+        })
+    }
+
     _removeOnCondition(moves, condition)  {
         let movesCopy = [...moves];
         movesCopy.forEach((move) => {
