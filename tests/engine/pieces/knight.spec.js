@@ -57,14 +57,27 @@ describe('Knight', () => {
         moves.should.deep.have.members(expectedMoves);
     });
 
-    it('cannot leave the board', () => {
+
+    it('cannot take friendly pieces', () => {
         const knight = new Knight(Player.WHITE);
         board.setPiece(Square.at(0, 0), knight);
-
+        const pawn = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(2,1), pawn)
         const moves = knight.getAvailableMoves(board);
 
-        const expectedMoves = [Square.at(1, 2), Square.at(2, 1)];
+        moves.should.not.deep.have.members([Square.at(2, 1)]);
+    });
 
-        moves.should.deep.have.members(expectedMoves);
+
+    it('can take opposing pieces', () => {
+        const knight = new Knight(Player.WHITE);
+        board.setPiece(Square.at(0, 0), knight);
+        const pawn = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(2,1), pawn)
+        const moves = knight.getAvailableMoves(board);
+
+        moves.should.deep.have.members([Square.at(2, 1), Square.at(1, 2)]);
+        board.movePiece(Square.at(0, 0), Square.at(2, 1))
+        board.getPiece(Square.at(2, 1)).player.should.equal(Player.WHITE)
     });
 });
