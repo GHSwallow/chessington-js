@@ -23,6 +23,8 @@ export default class Knight extends Piece {
             Square.at(currentSquare.row-1, currentSquare.col+2),
             Square.at(currentSquare.row-1, currentSquare.col-2),
             )
-        return this.removeMovesOutsideBoard(moves)
+        this.removeMovesToFriendlyPieces(board, moves, currentSquare)
+        this.removeMovesOutsideBoard(moves)
+        return moves
     }
 }
