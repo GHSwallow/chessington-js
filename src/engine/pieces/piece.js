@@ -30,7 +30,7 @@ export default class Piece {
 
     removeMovesToFriendlyPieces(board, moves, currentSquare){
         this._removeOnCondition(moves, (move) => {
-            this.positionIsOnBoard(move) && board.getPiece(move) && board.getPiece(move).player === this.player
+            return this.positionIsOnBoard(move) && board.getPiece(move) && board.getPiece(move).player === this.player
         })
     }
 
